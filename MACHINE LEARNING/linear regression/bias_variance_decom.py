@@ -393,25 +393,7 @@ def bias_variance_evolution(data):
 	plt.xlabel("ln(lambda)")
 	plt.ylabel("value")
 	plt.legend()	
-		
-		
-	
-		
-		
-		
 
-	
-		
-		
-				
-		
-		
-				
-
-		
-		 
-					  
-			
 #-----------------------------------------------------------------------------
 
 #----------------------------------program------------------------------------#
@@ -419,17 +401,31 @@ def bias_variance_evolution(data):
 data=Dataset_generator(Dataset_wid=50,Dataset_len=40,noise_type="Gaussian",noise_var=0.3)		
 data.display_trainset()
 data.display_trainset_histo()
-#%%	
-model=Linear_regression(data=data,basis="Gaussian",basis_num=10,lam=1,std=0.2)
-model.basis_display()
-#%%
-model.feature_preprocess(mode="train")
-model.train()
-#%%
-model.train_display()
-#%%
-model.test()
-#%%
+#%%	define a model and compare with several models with different lamda 
+model1=Linear_regression(data=data,basis="Gaussian",basis_num=10,lam=1,std=0.2)
+model1.basis_display()
+
+model2=Linear_regression(data=data,basis="Gaussian",basis_num=10,lam=10,std=0.2)
+
+
+model3=Linear_regression(data=data,basis="Gaussian",basis_num=10,lam=0.1,std=0.2)
+
+#%% train 
+model1.feature_preprocess(mode="train")
+model1.train()
+
+model2.feature_preprocess(mode="train")
+model2.train()
+
+model3.feature_preprocess(mode="train")
+model3.train()
+#%% display 
+model1.train_display()
+model2.train_display()
+model3.train_display()
+#%% test 
+model1.test()
+#%% explore the evolution of training results with respect to model complexity 
 bias_variance_evolution(data=data)
 
 
